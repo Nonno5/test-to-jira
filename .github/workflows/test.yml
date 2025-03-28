@@ -14,12 +14,12 @@ jobs:
         run: |
           curl --request POST \
             --url "https://tmfb1207.atlassian.net/rest/api/3/issue" \
-            --user "your-email@example.com:$JIRA_API_TOKEN" \
+            --user "tmfb1207@gmail.com:$JIRA_API_TOKEN" \
             --header 'Accept: application/json' \
             --header 'Content-Type: application/json' \
             --data '{
               "fields": {
-                "project": { "key": "PROJ" },
+                "project": { "key": "SCRUM" },
                 "summary": "${{ github.event.issue.title || github.event.pull_request.title }}",
                 "description": "${{ github.event.issue.body || github.event.pull_request.body }}",
                 "issuetype": { "name": "Task" }
