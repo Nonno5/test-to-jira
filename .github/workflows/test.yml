@@ -1,27 +1,18 @@
 name: Sync GitHub Issues/PRs to Jira
 
-on:
-  issues:
-    types: [opened, edited]
-  pull_request:
-    types: [opened, reopened, closed]
-
-jobs:
-  sync:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send issue/PR to Jira
-        run: |
-          curl --request POST \
-            --url "https://tmfb1207.atlassian.net/rest/api/3/issue" \
-            --user "tmfb1207@gmail.com:$JIRA_API_TOKEN" \
-            --header 'Accept: application/json' \
-            --header 'Content-Type: application/json' \
-            --data '{
-              "fields": {
-                "project": { "key": "SCRUM" },
-                "summary": "${{ github.event.issue.title || github.event.pull_request.title }}",
-                "description": "${{ github.event.issue.body || github.event.pull_request.body }}",
-                "issuetype": { "name": "Task" }
-              }
-            }'
+on: # 2
+  issues: 
+    types: [opened] 
+    
+jobs: # 3
+  create-issue:  # 4
+    name: Create Jira issue # 5
+    runs-on: ubuntu-latest # 6
+    steps: # 7
+    - name: Create Issue 
+      uses: atlassian/tmfb1207@v3
+      with:
+        project: SCRUM  # 10 - 프로젝트 key
+        issuetype: Task # 11 - 이슈 타입
+        summary: '${{ github.event.issue.title }}'
+        description: '${{ github.event.issue.html_url }}'
