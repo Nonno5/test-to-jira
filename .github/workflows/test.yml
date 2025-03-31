@@ -9,6 +9,13 @@ jobs: # 3
     name: Create Jira issue # 5
     runs-on: ubuntu-latest # 6
     steps: # 7
+    - name: Login
+      uses: atlassian/gajira-login@v3 # 8
+      env: 
+        JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }} # 9
+        JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+        JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+
     - name: Create Issue 
       uses: atlassian/tmfb1207@v3
       with:
